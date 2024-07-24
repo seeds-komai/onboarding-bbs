@@ -24,15 +24,14 @@ if($id == '') {
 }
 
 // 2.データベースに対象IDのレコードが存在するか
-
 //データベースに接続
 $connection = connectDB();
 //idが存在するか確認。１つでも見つかったら終了。
-//ブランチのテスト
 $stmt = $connection->prepare("SELECT * FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
-$stmt->execute();
-$checkid = $stmt->fetchColumn();
+// $stmt->execute();
+// $checkid = $stmt->fetchColumn();
+$checkid = $stmt->execute();
 if($checkid == false ) {
     redirect('/index.php');
 }
