@@ -14,11 +14,11 @@ define('DB_NAME', 'bbs');
 define('DB_USER', 'user');
 define('DB_PASSWORD', 'password');
 
-$host = DB_HOST;
-$port = DB_PORT;
-$dbname = DB_NAME;
-$user = DB_USER;
-$pass = DB_PASSWORD;
+// $host = DB_HOST;
+// $port = DB_PORT;
+// $dbname = DB_NAME;
+// $user = DB_USER;
+// $pass = DB_PASSWORD;
 
 /* ----------------------------------------------------------------------
  * データベースへの接続を行う
@@ -28,9 +28,9 @@ function connectDB(){
     // return null;
     
     try {
-        global $host,$port,$dbname,$user,$pass;
-        $dsn = "mysql:host=$host;port=$port;dbname=$dbname";
-        $pdo = new PDO($dsn, $user, $pass);
+        // global $host,$port,$dbname,$user,$pass;
+        $dsn = "mysql:host=".DB_HOST.";port=".DB_PORT.";dbname=".DB_NAME;
+        $pdo = new PDO($dsn, DB_USER, DB_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         return $pdo;
         
