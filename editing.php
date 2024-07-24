@@ -28,7 +28,7 @@ if($id == '') {
 //データベースに接続
 $connection = connectDB();
 //idが存在するか確認。１つでも見つかったら終了。
-//ブランチ設定のテスト
+//ブランチのテスト
 $stmt = $connection->prepare("SELECT * FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $stmt->execute();
