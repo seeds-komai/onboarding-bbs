@@ -11,7 +11,8 @@ require_once 'private/database.php';
  * -------------------------------------------------- */
 session_start();
 $id = $_POST['id'];
-$_SESSION['id'] = $id;
+$escaped_id = $id;
+$_SESSION['id'] = $escaped_id;
 
 /* --------------------------------------------------
  * 値のバリデーションを行う
@@ -32,11 +33,13 @@ $stmt = $connection->prepare("SELECT name FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $stmt->execute();
 $name = $stmt->fetchColumn();
+$escaped_name = $name;
 //条件が一致するcontentを持ってくる
 $stmt = $connection->prepare("SELECT content FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $stmt->execute();
 $content = $stmt->fetchColumn();
+$escaped_content = $content;
 
 /* --------------------------------------------------
  * 確認画面と削除画面で利用するトークンを発行する
@@ -64,8 +67,8 @@ $_SESSION['token'] = $token;
         <div>下記の内容を削除しますがよろしいですか?</div>
         <table>
             <tbody>
-            <tr><th>名前</th><td><?= $name ?></td></tr>
-            <tr><th>投稿内容</th><td><?= $content ?></td></tr>
+            <tr><th>名前</th><td><?= htmlspecialchars($escaped_name,ENT_QUOTES, 'UTF-8'); ?></td></tr>
+            <tr><th>投稿内容</th><td><?= htmlspecialchars($escaped_content,ENT_QUOTES, 'UTF-8'); ?></td></tr>
             </tbody>
         </table>
         <form action="delete_complete.php" method="post">
