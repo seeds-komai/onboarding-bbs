@@ -51,6 +51,13 @@ docker-compose up -d
 8. `delete_confirm.php`
 9. `delete_complete.php`
 
+## 開発の手順
+1. mainブランチから開発ブランチを作成
+2. 開発ブランチに移動
+3. 開発ブランチで作業
+4. pushしてプルリクエスト作成
+5. レビュー＆フィードバック
+
 ## チャレンジ課題
 
 - HTML、CSSを使ってサイトをデザイン
