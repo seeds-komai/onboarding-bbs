@@ -29,9 +29,9 @@ $connection = connectDB();
 //idが存在するか確認。１つでも見つかったら終了。
 $stmt = $connection->prepare("SELECT * FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
-// $stmt->execute();
-// $checkid = $stmt->fetchColumn();
-$checkid = $stmt->execute();
+$stmt->execute();
+//結果を配列に入れる
+$checkid = $stmt->fetch(PDO::FETCH_ASSOC);
 if($checkid == false ) {
     redirect('/index.php');
 }
@@ -39,16 +39,6 @@ if($checkid == false ) {
 /* --------------------------------------------------
  * 編集する投稿のデータ
  * -------------------------------------------------- */
-//idが一致する名前を取得するsql
-$stmt = $connection->prepare("SELECT name FROM articles WHERE id = :id");
-$stmt->bindValue(':id',$id,PDO::PARAM_INT);
-$stmt->execute();
-$name = $stmt->fetchColumn();
-//idが一致するコンテンツを取得するsql
-$stmt = $connection->prepare("SELECT content FROM articles WHERE id = :id");
-$stmt->bindValue(':id',$id,PDO::PARAM_INT);
-$stmt->execute();
-$content = $stmt->fetchColumn();
 
 /* --------------------------------------------------
  * 編集画面と編集完了画面で利用するトークンを発行する
@@ -89,11 +79,11 @@ $_SESSION['token'] = $token;
                 <tbody>
                 <tr>
                     <th><label for="name">名前</label></th>
-                    <td><input type="text" name="name" id="name" value="<?= $name ?>" required></td>
+                    <td><input type="text" name="name" id="name" value="<?= $checkid['name'] ?>" required></td>
                 </tr>
                 <tr>
                     <th><label for="content">投稿内容</label></th>
-                    <td><textarea name="content" id="content" rows="4" required><?= $content ?></textarea></td>
+                    <td><textarea name="content" id="content" rows="4" required><?= $checkid['content'] ?></textarea></td>
                 </tr>
                 </tbody>
             </table>
