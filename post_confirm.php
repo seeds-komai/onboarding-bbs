@@ -13,9 +13,7 @@ session_start();
  * セッションにも保存しておく
  * -------------------------------------------------- */
 $name = $_POST['name'];
-$escaped_name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 $content =  $_POST['content'];
-$escaped_content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
 $_SESSION['name'] = $escaped_name;
 $_SESSION['content'] = $escaped_content;
 

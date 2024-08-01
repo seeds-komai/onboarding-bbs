@@ -31,10 +31,7 @@ $stmt = $connection->prepare("SELECT * FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $stmt->execute();
 //結果を配列に入れる
-$checkid = $stmt->fetch(PDO::FETCH_ASSOC);
-if($checkid == false ) {
-    redirect('/index.php');
-}
+$content_ary = $stmt->fetch(PDO::FETCH_ASSOC);
 
 /* --------------------------------------------------
  * 編集する投稿のデータ
@@ -79,11 +76,11 @@ $_SESSION['token'] = $token;
                 <tbody>
                 <tr>
                     <th><label for="name">名前</label></th>
-                    <td><input type="text" name="name" id="name" value="<?= htmlspecialchars($checkid['name']) ?>" required></td>
+                    <td><input type="text" name="name" id="name" value="<?= htmlspecialchars($content_ary['name']) ?>" required></td>
                 </tr>
                 <tr>
                     <th><label for="content">投稿内容</label></th>
-                    <td><textarea name="content" id="content" rows="4" required><?= htmlspecialchars($checkid['content']) ?></textarea></td>
+                    <td><textarea name="content" id="content" rows="4" required><?= htmlspecialchars($content_ary['content']) ?></textarea></td>
                 </tr>
                 </tbody>
             </table>
