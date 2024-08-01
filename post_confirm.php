@@ -14,8 +14,8 @@ session_start();
  * -------------------------------------------------- */
 $name = $_POST['name'];
 $content =  $_POST['content'];
-$_SESSION['name'] = $escaped_name;
-$_SESSION['content'] = $escaped_content;
+$_SESSION['name'] = $name;
+$_SESSION['content'] = $content;
 
 /* --------------------------------------------------
  * 値のバリデーションを行う
@@ -24,7 +24,7 @@ $_SESSION['content'] = $escaped_content;
  * 今回は値が入力されているかのみを確認する
  * -------------------------------------------------- */
 
-if($escaped_name == '' || $escaped_content == '') {
+if($name == '' || $content == '') {
     redirect('/index.php');
 }
 
@@ -54,8 +54,8 @@ $_SESSION['token'] = $token;
         <div>下記の内容で投稿しますがよろしいですか?</div>
         <table>
             <tbody>
-            <tr><th>名前</th><td><?= htmlspecialchars($escaped_name,ENT_QUOTES, 'UTF-8'); ?></td></tr>
-            <tr><th>投稿内容</th><td><?=htmlspecialchars($escaped_content,ENT_QUOTES, 'UTF-8'); ?></td></tr>
+            <tr><th>名前</th><td><?= htmlspecialchars($name,ENT_QUOTES, 'UTF-8'); ?></td></tr>
+            <tr><th>投稿内容</th><td><?=htmlspecialchars($content,ENT_QUOTES, 'UTF-8'); ?></td></tr>
             </tbody>
         </table>
         <form action="post_complete.php" method="post">

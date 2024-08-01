@@ -28,18 +28,11 @@ if($id == ''){
  * -------------------------------------------------- */
 //DB接続
 $connection = connectDB();
-//条件が一致する名前を持ってくる
-$stmt = $connection->prepare("SELECT name FROM articles WHERE id = :id");
+//削除する内容を配列に格納
+$stmt = $connection->prepare("SELECT * FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $stmt->execute();
-$name = $stmt->fetchColumn();
-$escaped_name = $name;
-//条件が一致するcontentを持ってくる
-$stmt = $connection->prepare("SELECT content FROM articles WHERE id = :id");
-$stmt->bindValue(':id',$id,PDO::PARAM_INT);
-$stmt->execute();
-$content = $stmt->fetchColumn();
-$escaped_content = $content;
+$delete_ary = $stmt->fetch(PDO::FETCH_ASSOC);
 
 /* --------------------------------------------------
  * 確認画面と削除画面で利用するトークンを発行する
@@ -67,8 +60,8 @@ $_SESSION['token'] = $token;
         <div>下記の内容を削除しますがよろしいですか?</div>
         <table>
             <tbody>
-            <tr><th>名前</th><td><?= htmlspecialchars($escaped_name,ENT_QUOTES, 'UTF-8'); ?></td></tr>
-            <tr><th>投稿内容</th><td><?= htmlspecialchars($escaped_content,ENT_QUOTES, 'UTF-8'); ?></td></tr>
+            <tr><th>名前</th><td><?= htmlspecialchars($delete_ary['name'],ENT_QUOTES, 'UTF-8'); ?></td></tr>
+            <tr><th>投稿内容</th><td><?= htmlspecialchars($delete_ary['content'],ENT_QUOTES, 'UTF-8'); ?></td></tr>
             </tbody>
         </table>
         <form action="delete_complete.php" method="post">
