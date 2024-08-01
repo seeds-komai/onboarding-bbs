@@ -31,7 +31,7 @@ $stmt = $connection->prepare("SELECT * FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $stmt->execute();
 //編集前の内容を配列に入れる
-$edit_ary = $stmt->fetch(PDO::FETCH_ASSOC);
+$article = $stmt->fetch(PDO::FETCH_ASSOC);
 
 /* --------------------------------------------------
  * 編集する投稿のデータ
@@ -76,11 +76,11 @@ $_SESSION['token'] = $token;
                 <tbody>
                 <tr>
                     <th><label for="name">名前</label></th>
-                    <td><input type="text" name="name" id="name" value="<?= htmlspecialchars($edit_ary['name'],ENT_QUOTES, 'UTF-8') ?>" required></td>
+                    <td><input type="text" name="name" id="name" value="<?= htmlspecialchars($article['name'],ENT_QUOTES, 'UTF-8') ?>" required></td>
                 </tr>
                 <tr>
                     <th><label for="content">投稿内容</label></th>
-                    <td><textarea name="content" id="content" rows="4" required><?= htmlspecialchars($edit_ary['content'],ENT_QUOTES, 'UTF-8') ?></textarea></td>
+                    <td><textarea name="content" id="content" rows="4" required><?= htmlspecialchars($article['content'],ENT_QUOTES, 'UTF-8') ?></textarea></td>
                 </tr>
                 </tbody>
             </table>

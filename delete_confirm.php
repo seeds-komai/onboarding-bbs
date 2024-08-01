@@ -32,7 +32,7 @@ $connection = connectDB();
 $stmt = $connection->prepare("SELECT * FROM articles WHERE id = :id");
 $stmt->bindValue(':id',$id,PDO::PARAM_INT);
 $stmt->execute();
-$delete_ary = $stmt->fetch(PDO::FETCH_ASSOC);
+$article = $stmt->fetch(PDO::FETCH_ASSOC);
 
 /* --------------------------------------------------
  * 確認画面と削除画面で利用するトークンを発行する
@@ -60,8 +60,8 @@ $_SESSION['token'] = $token;
         <div>下記の内容を削除しますがよろしいですか?</div>
         <table>
             <tbody>
-            <tr><th>名前</th><td><?= htmlspecialchars($delete_ary['name'],ENT_QUOTES, 'UTF-8'); ?></td></tr>
-            <tr><th>投稿内容</th><td><?= htmlspecialchars($delete_ary['content'],ENT_QUOTES, 'UTF-8'); ?></td></tr>
+            <tr><th>名前</th><td><?= htmlspecialchars($article['name'],ENT_QUOTES, 'UTF-8'); ?></td></tr>
+            <tr><th>投稿内容</th><td><?= htmlspecialchars($article['content'],ENT_QUOTES, 'UTF-8'); ?></td></tr>
             </tbody>
         </table>
         <form action="delete_complete.php" method="post">
